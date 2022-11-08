@@ -13,21 +13,19 @@ from flask_gravatar import Gravatar
 import os
 # import gunicorn
 # import psycopg2
-from env2 import env2
+from dotenv import load_dotenv
 
-
-# # values are taken from the environment when the class is created
-# class Secrets(EnvEnum):
-#     APP_KEY: str = ()
-#     DATABASE_URL: str = ()
+load_dotenv()
+# print(os.environ.get("APP_KEY"))
+# print(os.environ.get("DATABASE_URL"))
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = env2("APP_KEY")
+app.config['SECRET_KEY'] = os.environ.get("APP_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = env2("DATABASE_URL",  "sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
