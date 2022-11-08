@@ -11,6 +11,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 import os
+import gunicorn
+# import psycopg2-binary
 
 
 app = Flask(__name__)
