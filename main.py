@@ -11,17 +11,23 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 import os
-import gunicorn
-# import psycopg2-binary
+# import gunicorn
+# import psycopg2
+from loadenv import EnvEnum
 
+
+# values are taken from the environment when the class is created
+class Secrets(EnvEnum):
+    APP_KEY: str = ()
+    DATABASE_URL: str = ()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("APP_KEY")
+app.config['SECRET_KEY'] = os.environ.get(Secrets.APP_KEY)
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(Secrets.DATABASE_URL,  "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
